@@ -17,7 +17,7 @@ const getEpisodes = async (seasonLink) => {
     hrefs.push({text, href: el.attribs.href});
   });
 
-  return (await Promise.all(hrefs.map(async href => ({...href, href: await getVideo(href.href)})))).filter(href => !!href.href);
+  return hrefs;
 };
 
 module.exports = getEpisodes;

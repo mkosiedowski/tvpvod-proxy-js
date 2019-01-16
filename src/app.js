@@ -6,6 +6,7 @@ const getSubcategories = require('./subcategories');
 const getSeries = require('./series');
 const getSeasons = require('./seasons');
 const getEpisodes = require('./episodes');
+const getVideo = require('./video');
 
 module.exports = async function() {
   const path = require("path");
@@ -89,6 +90,10 @@ module.exports = async function() {
         res.json(episodes);
       }
     });
+  });
+  app.get("/video", async function (req, res) {
+    const video = await getVideo(req.query.url);
+    return res.redirect(video);
   });
 
   return app;
