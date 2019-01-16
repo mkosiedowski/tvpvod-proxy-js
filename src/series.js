@@ -20,7 +20,7 @@ const getSeries = async (subcategoryUrl) => {
     });
   });
 
-  return hrefs;
+  return hrefs.sort((link1, link2) => link1.text.localeCompare(link2.text));
 };
 
 module.exports = getSeries;

@@ -13,8 +13,8 @@ const getEpisodes = async (seasonLink) => {
   const $ = await rp(options);
   const hrefs = [];
   $('a.strefa-abo__item-link').each((_, el) => {
-    const title = $(el).find('.strefa-abo__sub-title')[0].children[0].data;
-    hrefs.push({title, href: el.attribs.href});
+    const text = $(el).find('.strefa-abo__sub-title')[0].children[0].data;
+    hrefs.push({text, href: el.attribs.href});
   });
 
   return Promise.all(hrefs.map(async href => ({...href, href: await getVideo(href.href)})));
