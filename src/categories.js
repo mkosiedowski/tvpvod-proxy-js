@@ -2,7 +2,7 @@ const rp = require('request-promise');
 const cheerio = require('cheerio');
 const BASE_URL = 'https://vod.tvp.pl';
 
-const getPrefix = href => href.match(/\/teatr,/) ? '/episodes?season=' : '/subcategories?category=';
+const getPrefix = href => href.match(/\/(teatr|dla-dzieci),/) ? '/episodes?season=' : '/subcategories?category=';
 
 const getCategories = async () => {
   const options = {

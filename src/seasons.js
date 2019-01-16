@@ -14,7 +14,10 @@ const getSeasons = async (seriesLink) => {
   const hrefs = [];
   $('.strefa-abo__select-menu a').each((_, el) => {
     if (el.children.length === 1) {
-      hrefs.push({text: el.children[0].data.replace(/^\s*(.*?)\s*$/, '$1'), href: el.attribs.href});
+      hrefs.push({
+        text: el.children[0].data.replace(/^\s*(.*?)\s*$/, '$1'),
+        href: `/episodes?season=${el.attribs.href.replace('&', '&amp;')}`,
+      });
     }
   });
   return hrefs;

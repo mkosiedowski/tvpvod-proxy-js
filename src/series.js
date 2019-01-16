@@ -16,7 +16,7 @@ const getSeries = async (subcategoryUrl) => {
 
     hrefs.push({
       text: $(el).find('.strefa-abo__title')[0].children[0].data.replace(/^\s*(.*?)\s*$/, '$1'),
-      href: el.attribs.href
+      href: `/seasons?serie=${el.attribs.href}`,
     });
   });
 

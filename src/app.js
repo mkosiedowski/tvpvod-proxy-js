@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const hbs = require('hbs');
 const getCategories = require('./categories');
 const getSubcategories = require('./subcategories');
 const getSeries = require('./series');
@@ -8,11 +7,22 @@ const getSeasons = require('./seasons');
 const getEpisodes = require('./episodes');
 const getVideo = require('./video');
 
+const render = (res, data) => res.format({
+  "text/html"() {
+    res.render("list", { data, layout: res.locals.layout });
+  },
+  "application/json"() {
+    res.json(categories);
+  },
+  default() {
+    res.json(categories);
+  }
+});
+
 module.exports = async function() {
   const path = require("path");
   app.set("views", path.join(__dirname, "views"));
   app.set("view engine", "hbs");
-  hbs.registerHelper("urlEscape", (str) => str.replace('&', '&amp;'));
   const layoutDecorator = require("./layout/layoutDecorator");
 
   app.use(function(req, res, next) {
@@ -23,73 +33,23 @@ module.exports = async function() {
 
   app.get("/", async function (req, res) {
     const categories = await getCategories();
-    return res.format({
-      "text/html"() {
-        res.render("categories", { categories, layout: res.locals.layout });
-      },
-      "application/json"() {
-        res.json(categories);
-      },
-      default() {
-        res.json(categories);
-      }
-    });
+    return render(res, categories);
   });
   app.get("/subcategories", async function (req, res) {
     const subcategories = await getSubcategories(req.query.category);
-    return res.format({
-      "text/html"() {
-        res.render("subcategories", { subcategories, layout: res.locals.layout });
-      },
-      "application/json"() {
-        res.json(subcategories);
-      },
-      default() {
-        res.json(subcategories);
-      }
-    });
+    return render(res, subcategories);
   });
   app.get("/series", async function (req, res) {
     const series = await getSeries(req.query.subcategory);
-    return res.format({
-      "text/html"() {
-        res.render("series", { series, layout: res.locals.layout });
-      },
-      "application/json"() {
-        res.json(series);
-      },
-      default() {
-        res.json(series);
-      }
-    });
+    return render(res, series);
   });
   app.get("/seasons", async function (req, res) {
     const seasons = await getSeasons(req.query.serie);
-    return res.format({
-      "text/html"() {
-        res.render("seasons", { seasons, layout: res.locals.layout });
-      },
-      "application/json"() {
-        res.json(seasons);
-      },
-      default() {
-        res.json(seasons);
-      }
-    });
+    return render(res, seasons);
   });
   app.get("/episodes", async function (req, res) {
     const episodes = await getEpisodes(req.query.season);
-    return res.format({
-      "text/html"() {
-        res.render("episodes", { episodes, layout: res.locals.layout });
-      },
-      "application/json"() {
-        res.json(episodes);
-      },
-      default() {
-        res.json(episodes);
-      }
-    });
+    return render(res, episodes);
   });
   app.get("/video", async function (req, res) {
     const video = await getVideo(req.query.url);

@@ -13,7 +13,10 @@ const getSubcategories = async (categoryUrl) => {
   const $ = await rp(options);
   const hrefs = [];
   $('h2 a').each((_, el) => {
-    hrefs.push({text: el.children[0].data.replace(/^\s*(.*?)\s*$/, '$1'), href: el.attribs.href});
+    hrefs.push({
+      text: el.children[0].data.replace(/^\s*(.*?)\s*$/, '$1'),
+      href: `/series?subcategory=${el.attribs.href}`,
+    });
   });
 
   return hrefs;
