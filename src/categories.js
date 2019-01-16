@@ -2,6 +2,8 @@ const rp = require('request-promise');
 const cheerio = require('cheerio');
 const BASE_URL = 'https://vod.tvp.pl';
 
+const getPrefix = href => href.match(/\/teatr,/) ? '/episodes?season=' : '/subcategories?category=';
+
 const getCategories = async () => {
   const options = {
     uri: BASE_URL,
@@ -14,7 +16,10 @@ const getCategories = async () => {
   const hrefs = [];
   $('.subMenu:first-of-type a').each((_, el) => {
     if (el.children.length === 1) {
-      hrefs.push({text: el.children[0].data.replace(/^\s*(.*?)\s*$/, '$1'), href: el.attribs.href});
+      hrefs.push({
+        text: el.children[0].data.replace(/^\s*(.*?)\s*$/, '$1'),
+        href: `${getPrefix(el.attribs.href)}${el.attribs.href}`,
+      });
     }
   });
 

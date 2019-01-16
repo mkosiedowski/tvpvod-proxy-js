@@ -5,7 +5,8 @@
   "main": "src/seasons.js",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
-    "start": "node --trace-warnings src/server.js"
+    "start": "node --trace-warnings src/server.js",
+    "dev": "nodemon --trace-warnings src/server.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,5 +16,8 @@
     "hbs": "^4.0.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
   }
 }
