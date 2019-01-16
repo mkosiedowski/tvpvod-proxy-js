@@ -3,7 +3,7 @@ $ npm instal
 $ npm start
 ```
 
-#Example requests:
+# Example requests:
 - Series categories: [http://localhost:3000/]()
 - Series subcategories: [http://localhost:3000/subcategories?category=/category/seriale,1649941]()
 - Series: [http://localhost:3000/series?subcategory=/sub-category/obyczajowe,1649986]()
