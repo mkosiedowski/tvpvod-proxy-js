@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const hbs = require('hbs');
 const getCategories = require('./categories');
 const getSubcategories = require('./subcategories');
 const getSeries = require('./series');
@@ -10,6 +11,7 @@ module.exports = async function() {
   const path = require("path");
   app.set("views", path.join(__dirname, "views"));
   app.set("view engine", "hbs");
+  hbs.registerHelper("urlEscape", (str) => str.replace('&', '&amp;'));
   const layoutDecorator = require("./layout/layoutDecorator");
 
   app.use(function(req, res, next) {

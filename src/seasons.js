@@ -4,7 +4,7 @@ const BASE_URL = 'https://vod.tvp.pl';
 
 const getSeasons = async (seriesLink) => {
   const options = {
-    uri: `${BASE_URL}${seriesLink}`,
+    uri: `${BASE_URL}${seriesLink}/video`,
     transform: function (body) {
       return cheerio.load(body);
     }
@@ -12,7 +12,7 @@ const getSeasons = async (seriesLink) => {
 
   const $ = await rp(options);
   const hrefs = [];
-  $('a[data-seasonid]').each((_, el) => {
+  $('.strefa-abo__select-menu a').each((_, el) => {
     if (el.children.length === 1) {
       hrefs.push({text: el.children[0].data.replace(/^\s*(.*?)\s*$/, '$1'), href: el.attribs.href});
     }
